@@ -16,6 +16,7 @@
 		4461424422715F9400AD0977 /* PLCommonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461424322715F9400AD0977 /* PLCommonViewController.swift */; };
 		4461424622715FAD00AD0977 /* PLCommonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461424522715FAD00AD0977 /* PLCommonTableViewController.swift */; };
 		4461424822715FBF00AD0977 /* PLCommonCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461424722715FBF00AD0977 /* PLCommonCollectionViewController.swift */; };
+		446652E0227FE1B300AECDA5 /* NormalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446652DF227FE1B300AECDA5 /* NormalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4461424322715F9400AD0977 /* PLCommonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCommonViewController.swift; sourceTree = "<group>"; };
 		4461424522715FAD00AD0977 /* PLCommonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCommonTableViewController.swift; sourceTree = "<group>"; };
 		4461424722715FBF00AD0977 /* PLCommonCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCommonCollectionViewController.swift; sourceTree = "<group>"; };
+		446652DF227FE1B300AECDA5 /* NormalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				4461422B22715E4400AD0977 /* HomeViewController.swift */,
+				446652DF227FE1B300AECDA5 /* NormalViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				4461422C22715E4400AD0977 /* HomeViewController.swift in Sources */,
 				4461424622715FAD00AD0977 /* PLCommonTableViewController.swift in Sources */,
 				4461422A22715E4400AD0977 /* AppDelegate.swift in Sources */,
+				446652E0227FE1B300AECDA5 /* NormalViewController.swift in Sources */,
 				4461424422715F9400AD0977 /* PLCommonViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +329,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4K7LLJ9N34;
 				INFOPLIST_FILE = EmptyViewSwiftDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -343,6 +348,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4K7LLJ9N34;
 				INFOPLIST_FILE = EmptyViewSwiftDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

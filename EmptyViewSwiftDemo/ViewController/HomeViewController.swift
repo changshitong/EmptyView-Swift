@@ -10,11 +10,47 @@ import UIKit
 
 class HomeViewController: PLCommonTableViewController {
 
+    var dataSource:NSMutableArray = NSMutableArray.init(objects: "NormalVC","TableViewVC","CollectionViewVC")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.title = "Demo List"
+        for i in 0...2 {
+            print("index =",i)
+        }
     }
 
+    override func initTableView() {
+        super.initTableView()
+        self.tableView!.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    //MARK: - tableView delegate & dataSource
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch indexPath.row {
+        case 0:
+            let vc = NormalViewController.init()
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            return
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(50)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = dataSource.object(at: indexPath.row) as? String
+        return cell
+    }
 
 }
 
