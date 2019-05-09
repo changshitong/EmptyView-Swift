@@ -21,24 +21,40 @@ public enum ViewDataLoadStatus:NSString {
     case noMore = "noMore"
 }
 
+protocol PLCommonViewControllerSubviews {
+    ///创建子视图空页面
+    func initSubviews()
+    ///创建空页面：可重写实现修改空页面
+    func initEmptyView()
+    ///布局空页面：可重写实现修改布局
+    func layoutEmptyView()
+}
+
 protocol PLCommonViewControllerLoadStatus {
     
     var loadStatus:ViewDataLoadStatus { get }
-    
     ///设置加载状态
     func setLoadStauts(status:ViewDataLoadStatus)
     
     func showLoadingStatusView()
     func showNoDataStatusView()
     func showExceptionStatusView()
-    
     ///还原加载状态：闲置状态
     func resetLoadStatus()
     
 }
 
-class PLCommonViewController: UIViewController,PLEmptyViewDelegate {
+protocol PLCommonViewControllerLoadData {
     
+    ///加载（刷新）新数据
+    func loadNewData()
+    ///加载更多数据
+    func loadMoreData()
+    
+}
+
+class PLCommonViewController: UIViewController,PLEmptyViewDelegate,PLCommonViewControllerSubviews,PLCommonViewControllerLoadData {
+
     public lazy private(set) var emptyView: PLEmptyView = {
         let view = PLEmptyView.init()
         view.delegate = self
@@ -64,26 +80,32 @@ class PLCommonViewController: UIViewController,PLEmptyViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.initSubviews()
     }
     
     open func initSubviews() {
         self.view.backgroundColor = UIColor.white;
-        self .initEmptyView()
+        self.initEmptyView()
+        self.layoutEmptyView()
     }
     
     open func initEmptyView() {
         self.view.addSubview(self.emptyView)
+        self.emptyView.backgroundColor = self.view.backgroundColor
+    }
+    
+    func layoutEmptyView()  {
         self.emptyView.frame = self.view.bounds
         self.emptyView.autoresizingMask = UIView.AutoresizingMask(arrayLiteral: UIView.AutoresizingMask.flexibleHeight,UIView.AutoresizingMask.flexibleWidth)
     }
     
     open func emptyView(view: PLEmptyView, didSelectedActionButton: UIButton) {
-        self.loadData()
+        self.loadNewData()
         print("touch actionButton")
     }
     
-    open func loadData() {}
+    open func loadNewData() {}
     open func loadMoreData() {}
 }
 
@@ -112,6 +134,7 @@ extension PLCommonViewController: PLCommonViewControllerLoadStatus {
         self.emptyView.setDetail(detail: "当前没有相关的内容，请先XXX")
         self.emptyView.setActionButtonTitle(title: "明白了")
         self.emptyView.isHidden = false
+        self.emptyView.superview?.bringSubviewToFront(self.emptyView)
     }
     
     func showExceptionStatusView() {
@@ -120,6 +143,7 @@ extension PLCommonViewController: PLCommonViewControllerLoadStatus {
         self.emptyView.setDetail(detail: "网络连接不稳定，请稍后重试")
         self.emptyView.setActionButtonTitle(title: "刷新")
         self.emptyView.isHidden = false
+        self.emptyView.superview?.bringSubviewToFront(self.emptyView)
     }
     
     func resetLoadStatus() {

@@ -22,7 +22,11 @@ class HomeViewController: PLCommonTableViewController {
 
     override func initTableView() {
         super.initTableView()
-        self.tableView!.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    override func emptyView(view: PLEmptyView, didSelectedActionButton: UIButton) {
+        self.resetLoadStatus()
     }
     
     //MARK: - tableView delegate & dataSource
@@ -33,6 +37,8 @@ class HomeViewController: PLCommonTableViewController {
         case 0:
             let vc = NormalViewController.init()
             self.navigationController?.pushViewController(vc, animated: true)
+        case 1:
+            self.showNoDataStatusView()
         default:
             return
         }
