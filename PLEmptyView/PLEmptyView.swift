@@ -8,10 +8,27 @@
 
 import UIKit
 
+///空白页的控件
+protocol PLEmptyViewSubviews {
+    
+    var imageView:UIImageView { get }
+    
+    var titleLabel:UILabel { get }
+    
+    var detailLabel:UILabel { get }
+    
+    var actionButton: UIButton { get }
+    
+}
+
+///设置空白页样式
 protocol PLEmptyViewStyle {
     
-    ///MARK: 设置控件背景色
-    func setActionButtonBackgroundColor(color:UIColor)
+    ///内容竖向偏移量
+    var contentVerticalOffset:CGFloat {get set}
+    
+    ///动作按钮是否圆角
+    var shouldActionButtonRoundCorners:Bool {get set}
     
     ///MARK: 设置文本颜色
     func setTitleColor(color:UIColor)
@@ -22,6 +39,9 @@ protocol PLEmptyViewStyle {
     func setTitleFont(font:UIFont)
     func setDetailFont(font:UIFont)
     func setActionButtonTitleFont(font:UIFont)
+    
+    ///MARK: 设置控件背景色
+    func setActionButtonBackgroundColor(color:UIColor)
     
     ///MARK: 设置内容
     func setImage(image:UIImage?)
@@ -35,8 +55,8 @@ protocol PLEmptyViewDelegate {
     func emptyView(view:PLEmptyView,didSelectedActionButton:UIButton)
 }
 
-class PLEmptyView: UIView {
-
+class PLEmptyView: UIView,PLEmptyViewSubviews {
+    
     public var delegate:PLEmptyViewDelegate?
     
     private lazy var scrollView: UIScrollView = {
@@ -85,10 +105,11 @@ class PLEmptyView: UIView {
         return button
     }()
     
-    open var verticalOffset = 0.0
+    ///内容竖向偏移量
+    private var verticalOffset = CGFloat(0.0)
     
     ///button是否圆角：默认圆角
-    open var actionButtonRoundCorners = true
+    private var actionButtonRoundCorners = true
     ///内容四周间隔
     open var imageInsets = UIEdgeInsets.zero
     open var titleInsets = UIEdgeInsets.init(top: 10, left: 0, bottom: 0, right: 0)
@@ -222,45 +243,39 @@ class PLEmptyView: UIView {
     
 }
 
-fileprivate extension UIView {
-    
-    func setX(x:CGFloat) {
-        var rect = self.frame
-        rect.origin.x = x
-        self.frame = rect
-    }
-    
-    func setY(y:CGFloat) {
-        var rect = self.frame
-        rect.origin.y = y
-        self.frame = rect
-    }
-    
-    func setWidth(width:CGFloat) {
-        var rect = self.frame
-        rect.size.width = width
-        self.frame = rect
-    }
-    
-    func setHeight(height:CGFloat) {
-        var rect = self.frame
-        rect.size.height = height
-        self.frame = rect
-    }
-}
-
-
 extension PLEmptyView:PLEmptyViewStyle {
     
-    //MARK: - Style Setter
+    ///  Button Corners Setter
     
-    //MARK: backgroundColor Setter
+   public var shouldActionButtonRoundCorners: Bool {
+        get {
+            return actionButtonRoundCorners
+        }
+        set {
+            actionButtonRoundCorners = shouldActionButtonAutoFitWidth
+            self.setNeedsLayout()
+        }
+    }
+    
+    ///  Content Offset Setter
+    
+   public var contentVerticalOffset: CGFloat {
+        get {
+            return verticalOffset
+        }
+        set {
+            verticalOffset = newValue
+            self.setNeedsLayout()
+        }
+    }
+    
+    /// backgroundColor Setter
     
     public func setActionButtonBackgroundColor(color:UIColor) {
         self.actionButton.backgroundColor = color
     }
     
-    //MARK: TextColor Setter
+    /// TextColor Setter
     
     public func setTitleColor(color:UIColor) {
         self.titleLabel.textColor = color
@@ -274,7 +289,7 @@ extension PLEmptyView:PLEmptyViewStyle {
         self.actionButton.setTitleColor(color, for: .normal)
     }
     
-    //MARK: Font Setter
+    /// Font Setter
     
     public func setTitleFont(font:UIFont) {
         self.titleLabel.font = font
@@ -291,7 +306,7 @@ extension PLEmptyView:PLEmptyViewStyle {
         self.setNeedsLayout()
     }
     
-    //MARK: Content Setter
+    /// Content Setter
     
     func setImage(image: UIImage?) {
         self.imageView.image = image
@@ -318,6 +333,33 @@ extension PLEmptyView:PLEmptyViewStyle {
         self.setNeedsLayout()
     }
     
+}
+
+fileprivate extension UIView {
+    
+    func setX(x:CGFloat) {
+        var rect = self.frame
+        rect.origin.x = x
+        self.frame = rect
+    }
+    
+    func setY(y:CGFloat) {
+        var rect = self.frame
+        rect.origin.y = y
+        self.frame = rect
+    }
+    
+    func setWidth(width:CGFloat) {
+        var rect = self.frame
+        rect.size.width = width
+        self.frame = rect
+    }
+    
+    func setHeight(height:CGFloat) {
+        var rect = self.frame
+        rect.size.height = height
+        self.frame = rect
+    }
 }
 
 fileprivate extension UIEdgeInsets {

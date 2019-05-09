@@ -48,7 +48,6 @@ class PLCommonViewController: UIViewController,PLEmptyViewDelegate {
     
     public private(set) var loadStatus = ViewDataLoadStatus.idle
     
-    
     init() {
         super.init(nibName: nil, bundle: nil);
     }
