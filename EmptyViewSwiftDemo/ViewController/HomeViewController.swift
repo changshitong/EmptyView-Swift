@@ -39,6 +39,9 @@ class HomeViewController: PLCommonTableViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:
             self.showNoDataStatusView()
+        case 2:
+            let vc = CollectionViewController.init()
+            self.navigationController?.pushViewController(vc, animated: true)
         default:
             return
         }

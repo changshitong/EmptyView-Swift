@@ -17,6 +17,7 @@
 		4461424622715FAD00AD0977 /* PLCommonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461424522715FAD00AD0977 /* PLCommonTableViewController.swift */; };
 		4461424822715FBF00AD0977 /* PLCommonCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461424722715FBF00AD0977 /* PLCommonCollectionViewController.swift */; };
 		446652E0227FE1B300AECDA5 /* NormalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446652DF227FE1B300AECDA5 /* NormalViewController.swift */; };
+		44889D3D22851B3C001E9950 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44889D3C22851B3C001E9950 /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		4461424522715FAD00AD0977 /* PLCommonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCommonTableViewController.swift; sourceTree = "<group>"; };
 		4461424722715FBF00AD0977 /* PLCommonCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCommonCollectionViewController.swift; sourceTree = "<group>"; };
 		446652DF227FE1B300AECDA5 /* NormalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalViewController.swift; sourceTree = "<group>"; };
+		44889D3C22851B3C001E9950 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			children = (
 				4461422B22715E4400AD0977 /* HomeViewController.swift */,
 				446652DF227FE1B300AECDA5 /* NormalViewController.swift */,
+				44889D3C22851B3C001E9950 /* CollectionViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				4461424822715FBF00AD0977 /* PLCommonCollectionViewController.swift in Sources */,
 				4461422C22715E4400AD0977 /* HomeViewController.swift in Sources */,
 				4461424622715FAD00AD0977 /* PLCommonTableViewController.swift in Sources */,
+				44889D3D22851B3C001E9950 /* CollectionViewController.swift in Sources */,
 				4461422A22715E4400AD0977 /* AppDelegate.swift in Sources */,
 				446652E0227FE1B300AECDA5 /* NormalViewController.swift in Sources */,
 				4461424422715F9400AD0977 /* PLCommonViewController.swift in Sources */,

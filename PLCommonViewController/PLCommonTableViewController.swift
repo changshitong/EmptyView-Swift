@@ -48,7 +48,7 @@ class PLCommonTableViewController: PLCommonViewController,PLCommonTableViewContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView .addObserver(self, forKeyPath: "contentInset", options: .new, context: nil)
+        self.tableView.addObserver(self, forKeyPath: "contentInset", options: .new, context: nil)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -80,7 +80,6 @@ class PLCommonTableViewController: PLCommonViewController,PLCommonTableViewContr
     
     override func layoutEmptyView() {
         super.layoutEmptyView()
-        self.emptyView.frame = self.tableView.bounds
         
         var insets = self.tableView.contentInset
         if #available(iOS 11.0, *) {
