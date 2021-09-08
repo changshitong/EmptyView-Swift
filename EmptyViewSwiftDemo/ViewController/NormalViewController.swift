@@ -14,17 +14,10 @@ class NormalViewController: PLCommonViewController {
         super.viewDidLoad()
         self.title = "viewController"
         self.showNoDataStatusView()
+        self.emptyView.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func emptyView(view: PLEmptyView, didSelectedActionButton: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
-    */
-
 }

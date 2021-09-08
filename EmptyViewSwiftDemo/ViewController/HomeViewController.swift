@@ -15,14 +15,21 @@ class HomeViewController: PLCommonTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Demo List"
-        for i in 0...2 {
-            print("index =",i)
-        }
+        self.tableView .register(TableViewCell.self, forCellReuseIdentifier: "ev_cell")
     }
 
     override func initTableView() {
         super.initTableView()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    func showNoDataView() {
+        self.emptyView.setImage(image: UIImage.init(named: "empty")!)
+        self.emptyView.setTitle(title: "无内容")
+        self.emptyView.setDetail(detail: "当前没有相关的内容，请先XXX")
+        self.emptyView.setActionButtonTitle(title: "返回")
+        self.emptyView.isHidden = false
+        self.emptyView.superview?.bringSubviewToFront(self.emptyView)
     }
     
     override func emptyView(view: PLEmptyView, didSelectedActionButton: UIButton) {
@@ -38,7 +45,7 @@ class HomeViewController: PLCommonTableViewController {
             let vc = NormalViewController.init()
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:
-            self.showNoDataStatusView()
+            self.showNoDataView()
         case 2:
             let vc = CollectionViewController.init()
             self.navigationController?.pushViewController(vc, animated: true)
@@ -48,14 +55,31 @@ class HomeViewController: PLCommonTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.section == 1 {
+            return CGFloat(300)
+        }
         return CGFloat(50)
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 1 {
+            return 1
+        }
         return dataSource.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ev_cell", for: indexPath)
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = dataSource.object(at: indexPath.row) as? String
         return cell

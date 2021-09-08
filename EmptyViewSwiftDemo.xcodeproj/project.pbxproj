@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048CBC1526E8631200507019 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CBC1426E8631200507019 /* TableViewCell.swift */; };
 		4461422A22715E4400AD0977 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461422922715E4400AD0977 /* AppDelegate.swift */; };
 		4461422C22715E4400AD0977 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4461422B22715E4400AD0977 /* HomeViewController.swift */; };
 		4461422F22715E4400AD0977 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4461422D22715E4400AD0977 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		048CBC1426E8631200507019 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4461422622715E4400AD0977 /* EmptyViewSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmptyViewSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4461422922715E4400AD0977 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4461422B22715E4400AD0977 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +49,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		048CBC1326E862ED00507019 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				048CBC1426E8631200507019 /* TableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		4461421D22715E4400AD0977 = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +78,7 @@
 		4461422822715E4400AD0977 /* EmptyViewSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
+				048CBC1326E862ED00507019 /* Cell */,
 				4461423E22715EE500AD0977 /* ViewController */,
 				4461422922715E4400AD0977 /* AppDelegate.swift */,
 				4461422D22715E4400AD0977 /* Main.storyboard */,
@@ -180,6 +191,7 @@
 				4461423D22715ECC00AD0977 /* PLEmptyView.swift in Sources */,
 				4461424822715FBF00AD0977 /* PLCommonCollectionViewController.swift in Sources */,
 				4461422C22715E4400AD0977 /* HomeViewController.swift in Sources */,
+				048CBC1526E8631200507019 /* TableViewCell.swift in Sources */,
 				4461424622715FAD00AD0977 /* PLCommonTableViewController.swift in Sources */,
 				44889D3D22851B3C001E9950 /* CollectionViewController.swift in Sources */,
 				4461422A22715E4400AD0977 /* AppDelegate.swift in Sources */,

@@ -40,6 +40,7 @@ class PLEmptyView: UIView {
     
     open lazy private(set) var titleLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.black
         label.textAlignment = .center
         label.isHidden = true
@@ -48,7 +49,8 @@ class PLEmptyView: UIView {
     
     open lazy private(set) var detailLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor.lightGray
         label.numberOfLines = 0
         label.textAlignment = .center
         label.isHidden = true

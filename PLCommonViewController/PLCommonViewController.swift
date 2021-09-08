@@ -26,7 +26,7 @@ protocol PLCommonViewControllerSubviews {
     func initSubviews()
     ///创建空页面：可重写实现修改空页面
     func initEmptyView()
-    ///布局空页面：可重写实现修改布局
+    ///布局空页@objc @objc @objc 面：可重写实现修改布局
     func layoutEmptyView()
 }
 
