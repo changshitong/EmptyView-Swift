@@ -8,54 +8,14 @@
 
 import UIKit
 
-///空白页的控件
-protocol PLEmptyViewSubviews {
-    
-    var imageView:UIImageView { get }
-    
-    var titleLabel:UILabel { get }
-    
-    var detailLabel:UILabel { get }
-    
-    var actionButton: UIButton { get }
-    
-}
-
-///设置空白页样式
-protocol PLEmptyViewStyle {
-    
-    ///内容竖向偏移量
-    var contentVerticalOffset:CGFloat {get set}
-    
-    ///动作按钮是否圆角
-    var shouldActionButtonRoundCorners:Bool {get set}
-    
-    ///MARK: 设置文本颜色
-    func setTitleColor(color:UIColor)
-    func setDetailColor(color:UIColor)
-    func setActionButtonTitleColor(color:UIColor)
-    
-    ///MARK: 设置文本字体
-    func setTitleFont(font:UIFont)
-    func setDetailFont(font:UIFont)
-    func setActionButtonTitleFont(font:UIFont)
-    
-    ///MARK: 设置控件背景色
-    func setActionButtonBackgroundColor(color:UIColor)
-    
-    ///MARK: 设置内容
-    func setImage(image:UIImage?)
-    func setTitle(title:String?)
-    func setDetail(detail:String?)
-    func setActionButtonTitle(title:String?)
-    
-}
-
+// EmptyView Protocol
 protocol PLEmptyViewDelegate {
+    /* This method is called when the actionButton is clicked */
     func emptyView(view:PLEmptyView,didSelectedActionButton:UIButton)
 }
 
-class PLEmptyView: UIView,PLEmptyViewSubviews {
+// Base View
+class PLEmptyView: UIView {
     
     public var delegate:PLEmptyViewDelegate?
     
@@ -126,11 +86,15 @@ class PLEmptyView: UIView,PLEmptyViewSubviews {
         initSubviews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(frame: CGRect.zero)
+    required convenience init?(coder aDecoder: NSCoder) {
+        self.init(frame: CGRect.zero)
     }
     
-    //MARK: UI
+}
+
+//MARK: - Base UI -
+
+extension PLEmptyView {
     
     public func initSubviews() {
         self.addSubview(self.scrollView)
@@ -149,15 +113,15 @@ class PLEmptyView: UIView,PLEmptyViewSubviews {
         
         contentView.frame = CGRect.init(x: 0, y: 0, width: contentViewSize.width, height: contentViewSize.height)
         if contentView.bounds.height > scrollView.bounds.height {
-            contentView.setY(y: CGFloat(verticalOffset))
+            contentView.ev_setY(y: CGFloat(verticalOffset))
             scrollView.bounces = true
         } else {
-            contentView.setY(y: CGFloat(verticalOffset) + scrollView.bounds.midY - contentViewSize.height/2.0)
+            contentView.ev_setY(y: CGFloat(verticalOffset) + scrollView.bounds.midY - contentViewSize.height/2.0)
             scrollView.bounces = false
         }
         
-        let scrollViewContentSizeWith = fmax(scrollView.frame.width - scrollView.contentInset.width(), contentViewSize.width)
-        let scrollViewContentSizeHeight = fmax(scrollView.frame.height - scrollView.contentInset.height(), contentView.frame.maxY)
+        let scrollViewContentSizeWith = fmax(scrollView.frame.width - scrollView.contentInset.ev_width(), contentViewSize.width)
+        let scrollViewContentSizeHeight = fmax(scrollView.frame.height - scrollView.contentInset.ev_height(), contentView.frame.maxY)
         scrollView.contentSize = CGSize.init(width: scrollViewContentSizeWith, height: scrollViewContentSizeHeight)
         
         var originY = CGFloat(0.0)
@@ -169,13 +133,13 @@ class PLEmptyView: UIView,PLEmptyViewSubviews {
         }
 
         if !titleLabel.isHidden {
-            titleLabel.frame = CGRect.init(x: titleInsets.left, y: originY + titleInsets.top, width: contentView.frame.width - titleInsets.width(), height: titleLabel.frame.height)
+            titleLabel.frame = CGRect.init(x: titleInsets.left, y: originY + titleInsets.top, width: contentView.frame.width - titleInsets.ev_width(), height: titleLabel.frame.height)
             originY = titleLabel.frame.maxY + titleInsets.bottom;
             
         }
         
         if !detailLabel.isHidden {
-            detailLabel.frame = CGRect.init(x: detailInsets.left, y: originY + detailInsets.top, width: contentView.frame.width - detailInsets.width(), height: detailLabel.frame.height)
+            detailLabel.frame = CGRect.init(x: detailInsets.left, y: originY + detailInsets.top, width: contentView.frame.width - detailInsets.ev_width(), height: detailLabel.frame.height)
             originY = detailLabel.frame.maxY + detailInsets.bottom;
         }
         
@@ -188,7 +152,7 @@ class PLEmptyView: UIView,PLEmptyViewSubviews {
                 actionButton.frame = rect
                 actionButton.center = CGPoint.init(x: contentView.frame.width/2.0, y: actionButton.center.y)
             } else {
-                actionButton.frame = CGRect.init(x:actionButtonInsets.left , y: originY + actionButtonInsets.top, width: contentView.frame.width - actionButtonInsets.width(), height: actionButton.frame.height)
+                actionButton.frame = CGRect.init(x:actionButtonInsets.left , y: originY + actionButtonInsets.top, width: contentView.frame.width - actionButtonInsets.ev_width(), height: actionButton.frame.height)
             }
             originY = actionButton.frame.maxY + actionButtonInsets.bottom;
             actionButton.clipsToBounds = self.actionButtonRoundCorners;
@@ -198,43 +162,36 @@ class PLEmptyView: UIView,PLEmptyViewSubviews {
         }
     }
     
-    //MARK: Button Action
-    
-    @objc func actionButtonDidSelected(button:UIButton) {
-        delegate?.emptyView(view: self, didSelectedActionButton: button)
-    }
-    
-    //MARK: ContentView fitSize
-    
+    /// ContentView fitSize
     public func sizeOfContentViewFits() -> CGSize {
         var resultHeight = 0.0
-        let resultWidth = self.scrollView.bounds.width + self.scrollView.contentInset.width()
+        let resultWidth = self.scrollView.bounds.width + self.scrollView.contentInset.ev_width()
         
         if !imageView.isHidden {
-            var imageViewHeight = imageView .sizeThatFits(CGSize.init(width: resultWidth-imageInsets.width(), height: CGFloat.greatestFiniteMagnitude)).height
-            imageView.setHeight(height: imageViewHeight)
-            imageViewHeight += imageInsets.height()
+            var imageViewHeight = imageView .sizeThatFits(CGSize.init(width: resultWidth-imageInsets.ev_width(), height: CGFloat.greatestFiniteMagnitude)).height
+            imageView.ev_setHeight(height: imageViewHeight)
+            imageViewHeight += imageInsets.ev_height()
             resultHeight += Double(imageViewHeight)
         }
         
         if !titleLabel.isHidden {
-            var titleHeight = titleLabel.sizeThatFits(CGSize.init(width: resultWidth-titleInsets.width(), height: CGFloat.greatestFiniteMagnitude)).height
-            titleLabel.setHeight(height: titleHeight)
-            titleHeight += titleInsets.height()
+            var titleHeight = titleLabel.sizeThatFits(CGSize.init(width: resultWidth-titleInsets.ev_width(), height: CGFloat.greatestFiniteMagnitude)).height
+            titleLabel.ev_setHeight(height: titleHeight)
+            titleHeight += titleInsets.ev_height()
             resultHeight += Double(titleHeight)
         }
         
         if !detailLabel.isHidden {
-            var detailHeight = detailLabel.sizeThatFits(CGSize.init(width: resultWidth-detailInsets.width(), height: CGFloat.greatestFiniteMagnitude)).height
-            detailLabel.setHeight(height: detailHeight)
-            detailHeight += detailInsets.height()
+            var detailHeight = detailLabel.sizeThatFits(CGSize.init(width: resultWidth-detailInsets.ev_width(), height: CGFloat.greatestFiniteMagnitude)).height
+            detailLabel.ev_setHeight(height: detailHeight)
+            detailHeight += detailInsets.ev_height()
             resultHeight += Double(detailHeight)
         }
         
         if !actionButton.isHidden {
-            var buttonHeight = actionButton.sizeThatFits(CGSize.init(width: resultWidth-actionButtonInsets.width(), height: CGFloat.greatestFiniteMagnitude)).height
-            actionButton.setHeight(height: buttonHeight)
-            buttonHeight += actionButtonInsets.height()
+            var buttonHeight = actionButton.sizeThatFits(CGSize.init(width: resultWidth-actionButtonInsets.ev_width(), height: CGFloat.greatestFiniteMagnitude)).height
+            actionButton.ev_setHeight(height: buttonHeight)
+            buttonHeight += actionButtonInsets.ev_height()
             resultHeight += Double(buttonHeight)
         }
         
@@ -243,9 +200,22 @@ class PLEmptyView: UIView,PLEmptyViewSubviews {
     
 }
 
-extension PLEmptyView:PLEmptyViewStyle {
+//MARK: - Button Action -
+
+extension PLEmptyView {
     
-    ///  Button Corners Setter
+    /// actionButton touch
+    @objc func actionButtonDidSelected(button:UIButton) {
+        delegate?.emptyView(view: self, didSelectedActionButton: button)
+    }
+    
+}
+
+//MARK: - Set ViewStyle Func -
+
+extension PLEmptyView {
+    
+   /*  Button Corners Setter */
     
    public var shouldActionButtonRoundCorners: Bool {
         get {
@@ -257,7 +227,7 @@ extension PLEmptyView:PLEmptyViewStyle {
         }
     }
     
-    ///  Content Offset Setter
+   /*  Content Offset Setter */
     
    public var contentVerticalOffset: CGFloat {
         get {
@@ -269,14 +239,13 @@ extension PLEmptyView:PLEmptyViewStyle {
         }
     }
     
-    /// backgroundColor Setter
+    /* backgroundColor Setter */
     
     public func setActionButtonBackgroundColor(color:UIColor) {
         self.actionButton.backgroundColor = color
     }
     
     /// TextColor Setter
-    
     public func setTitleColor(color:UIColor) {
         self.titleLabel.textColor = color
     }
@@ -289,7 +258,7 @@ extension PLEmptyView:PLEmptyViewStyle {
         self.actionButton.setTitleColor(color, for: .normal)
     }
     
-    /// Font Setter
+    /* Font Setter */
     
     public func setTitleFont(font:UIFont) {
         self.titleLabel.font = font
@@ -306,7 +275,7 @@ extension PLEmptyView:PLEmptyViewStyle {
         self.setNeedsLayout()
     }
     
-    /// Content Setter
+    /* Content Setter */
     
     func setImage(image: UIImage?) {
         self.imageView.image = image
@@ -335,27 +304,29 @@ extension PLEmptyView:PLEmptyViewStyle {
     
 }
 
+//MARK: - Private Func -
+
 fileprivate extension UIView {
     
-    func setX(x:CGFloat) {
+    func ev_setX(x:CGFloat) {
         var rect = self.frame
         rect.origin.x = x
         self.frame = rect
     }
     
-    func setY(y:CGFloat) {
+    func ev_setY(y:CGFloat) {
         var rect = self.frame
         rect.origin.y = y
         self.frame = rect
     }
     
-    func setWidth(width:CGFloat) {
+    func ev_setWidth(width:CGFloat) {
         var rect = self.frame
         rect.size.width = width
         self.frame = rect
     }
     
-    func setHeight(height:CGFloat) {
+    func ev_setHeight(height:CGFloat) {
         var rect = self.frame
         rect.size.height = height
         self.frame = rect
@@ -364,11 +335,11 @@ fileprivate extension UIView {
 
 fileprivate extension UIEdgeInsets {
     
-    func width() -> CGFloat {
+    func ev_width() -> CGFloat {
         return self.left + self.right
     }
     
-    func height() -> CGFloat {
+    func ev_height() -> CGFloat {
         return self.top + self.bottom
     }
     
